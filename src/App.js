@@ -95,6 +95,11 @@ function App() {
           ""
         )}
       </main>
+      <footer>
+        <h4>
+          Made by <i>Shayak Roychowdhury</i>
+        </h4>
+      </footer>
     </div>
   );
 }

@@ -1,24 +1,26 @@
 import React, { useState } from "react";
 import "./styles.css";
+import UpcomingWeather from "./UpcomingWeather";
+
 const api = {
   key: "86a91baa8ae718ce8ca33d3bb4914ec7",
   base: "https://api.openweathermap.org/data/2.5/"
 };
 
 function App() {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState();
   const [weather, setWeather] = useState({});
 
   const search = (evt) => {
-    if (evt.key === "Enter") {
-      fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
-        .then((res) => res.json())
-        .then((result) => {
-          setWeather(result);
-          setQuery("");
-          console.log(result);
-        });
-    }
+    // if (evt.key === "Enter") {
+    fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
+      .then((res) => res.json())
+      .then((result) => {
+        setWeather(result);
+        // setQuery("");
+        console.log(result);
+      });
+    // }
   };
 
   const dateBuilder = (d) => {
@@ -66,16 +68,28 @@ function App() {
     >
       <main>
         <div className="search-box">
-          <input
+          <select
             className="search-bar"
             placeholder="Search..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            onKeyPress={search}
-          />
+            onClick={search}
+            // onKeyPress={search}
+          >
+            <option>---Select---</option>
+            <option>Kolkata</option>
+            <option>Mumbai</option>
+            <option>Chennai</option>
+            <option>Delhi</option>
+            <option>Pune</option>
+            <option>Patna</option>
+            <option>Hyderabad</option>
+            <option>Australia</option>
+            <option>Antarctica</option>
+          </select>
         </div>
         {typeof weather.main !== "undefined" ? (
-          <div>
+          <div className="body">
             <div className="location-box">
               <div className="location">
                 {weather.name}, {weather.sys.country}
@@ -94,6 +108,7 @@ function App() {
         ) : (
           ""
         )}
+        <UpcomingWeather location={query} />
       </main>
       <footer>
         <h4>
